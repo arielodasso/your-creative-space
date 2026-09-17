@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type {
-  Activity, AgencyEvent, Communication, Contact, DocumentItem, Inquiry,
+  Activity, AgencyEvent, Club, Communication, Contact, DocumentItem, Inquiry,
   Negotiation, Notification, Opportunity, Player, ScoutingReport, Task,
 } from "./data/types";
 import * as seed from "./data/seed";
@@ -9,7 +9,7 @@ export type Store = {
   authenticated: boolean;
   userName: string;
   players: Player[];
-  clubs: Contact extends never ? never : import("./data/types").Club[];
+  clubs: Club[];
   contacts: Contact[];
   opportunities: Opportunity[];
   negotiations: Negotiation[];
