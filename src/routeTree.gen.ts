@@ -9,50 +9,134 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicAgencyRouteImport } from './routes/_public/agency'
+import { Route as PublicServicesRouteImport } from './routes/_public/services'
+import { Route as PublicPlayersIndexRouteImport } from './routes/_public/players/index'
 
-const IndexRoute = IndexRouteImport.update({
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAgencyRoute = PublicAgencyRouteImport.update({
+  id: '/agency',
+  path: '/agency',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicServicesRoute = PublicServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPlayersIndexRoute = PublicPlayersIndexRouteImport.update({
+  id: '/players/',
+  path: '/players/',
+  getParentRoute: () => PublicRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof PublicIndexRoute
+  '/agency': typeof PublicAgencyRoute
+  '/services': typeof PublicServicesRoute
+  '/players/': typeof PublicPlayersIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/agency': typeof PublicAgencyRoute
+  '/services': typeof PublicServicesRoute
+  '/': typeof PublicIndexRoute
+  '/players': typeof PublicPlayersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_public': typeof PublicRouteWithChildren
+  '/_public/agency': typeof PublicAgencyRoute
+  '/_public/services': typeof PublicServicesRoute
+  '/_public/': typeof PublicIndexRoute
+  '/_public/players/': typeof PublicPlayersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/agency' | '/services' | '/players/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/agency' | '/services' | '/' | '/players'
+  id:
+    | '__root__'
+    | '/_public'
+    | '/_public/agency'
+    | '/_public/services'
+    | '/_public/'
+    | '/_public/players/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/agency': {
+      id: '/_public/agency'
+      path: '/agency'
+      fullPath: '/agency'
+      preLoaderRoute: typeof PublicAgencyRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/services': {
+      id: '/_public/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof PublicServicesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/players/': {
+      id: '/_public/players/'
+      path: '/players'
+      fullPath: '/players/'
+      preLoaderRoute: typeof PublicPlayersIndexRouteImport
+      parentRoute: typeof PublicRoute
     }
   }
 }
 
+interface PublicRouteChildren {
+  PublicAgencyRoute: typeof PublicAgencyRoute
+  PublicServicesRoute: typeof PublicServicesRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PublicPlayersIndexRoute: typeof PublicPlayersIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAgencyRoute: PublicAgencyRoute,
+  PublicServicesRoute: PublicServicesRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PublicPlayersIndexRoute: PublicPlayersIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  PublicRoute: PublicRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
