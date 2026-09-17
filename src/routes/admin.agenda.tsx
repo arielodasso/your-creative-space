@@ -59,13 +59,13 @@ const MONTHS = [
 ];
 
 function dateLabel(iso: string) {
-  const [y, m, d] = iso.split("-").map(Number);
+  const [y = 0, m = 1, d = 1] = iso.split("-").map(Number);
   const today = todayISO();
   if (iso === today) return "Hoy";
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   if (iso === tomorrow.toISOString().slice(0, 10)) return "Mañana";
-  return `${d} de ${MONTHS[m - 1]} de ${y}`;
+  return `${d} de ${MONTHS[m - 1] ?? ""} de ${y}`;
 }
 
 function EventFormDialog({ event, trigger }: { event?: AgencyEvent; trigger: React.ReactNode }) {

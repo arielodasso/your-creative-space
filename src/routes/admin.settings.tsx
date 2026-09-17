@@ -131,7 +131,7 @@ function SettingsModule() {
                   <p className="text-xs text-muted-foreground">{c.detail}</p>
                 </div>
                 <Switch
-                  checked={prefs[c.key]}
+                  checked={!!prefs[c.key]}
                   onCheckedChange={(v) => setPrefs((p) => ({ ...p, [c.key]: v }))}
                 />
               </li>

@@ -74,28 +74,26 @@ function CommFormDialog({ comm, trigger }: { comm?: Communication; trigger: Reac
       toast.error("El asunto es obligatorio.");
       return;
     }
-    const wrap = (v: string) => (v === "__none__" ? undefined : v);
+    const link = (v: string) => (v && v !== "__none__" ? v : undefined);
+    const base = {
+      subject: form.subject.trim(),
+      type: form.type as CommunicationType,
+      description: form.description.trim(),
+      owner: form.owner,
+    };
+    const contactId = link(form.contactId);
+    const playerId = link(form.playerId);
+    const clubId = link(form.clubId);
+    const links = {
+      ...(contactId ? { contactId } : {}),
+      ...(playerId ? { playerId } : {}),
+      ...(clubId ? { clubId } : {}),
+    };
     if (comm) {
-      actions.update("communications", comm.id, {
-        ...form,
-        subject: form.subject.trim(),
-        description: form.description.trim(),
-        contactId: wrap(form.contactId),
-        playerId: wrap(form.playerId),
-        clubId: wrap(form.clubId),
-        type: form.type as CommunicationType,
-      });
+      actions.update("communications", comm.id, { ...base, ...links });
       toast.success("Comunicación actualizada");
     } else {
-      actions.addCommunication({
-        subject: form.subject.trim(),
-        type: form.type as CommunicationType,
-        description: form.description.trim(),
-        contactId: wrap(form.contactId),
-        playerId: wrap(form.playerId),
-        clubId: wrap(form.clubId),
-        owner: form.owner,
-      });
+      actions.addCommunication({ ...base, ...links });
       toast.success("Comunicación registrada");
     }
     setOpen(false);

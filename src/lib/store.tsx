@@ -1,7 +1,18 @@
 import { useSyncExternalStore } from "react";
 import type {
-  Activity, AgencyEvent, Club, Communication, Contact, DocumentItem, Inquiry,
-  Negotiation, Notification, Opportunity, Player, ScoutingReport, Task,
+  Activity,
+  AgencyEvent,
+  Club,
+  Communication,
+  Contact,
+  DocumentItem,
+  Inquiry,
+  Negotiation,
+  Notification,
+  Opportunity,
+  Player,
+  ScoutingReport,
+  Task,
 } from "./data/types";
 import * as seed from "./data/seed";
 
@@ -36,7 +47,7 @@ function initialState(): Store {
     events: [...seed.events],
     communications: [...seed.communications],
     documents: [...seed.documents],
-    scouting: [...seed.scouting],
+    scouting: [...seed.scoutingReports],
     activities: [...seed.activities],
     notifications: [...seed.notifications],
     inquiries: [],
@@ -53,7 +64,10 @@ function setState(patch: Partial<Store>) {
 
 export function useStore(): Store {
   return useSyncExternalStore(
-    (cb) => { listeners.add(cb); return () => listeners.delete(cb); },
+    (cb) => {
+      listeners.add(cb);
+      return () => listeners.delete(cb);
+    },
     () => state,
     () => state,
   );
@@ -69,24 +83,70 @@ function pushActivity(text: string, kind: Activity["kind"]) {
 }
 
 export const actions = {
-  login() { setState({ authenticated: true }); },
-  logout() { setState({ authenticated: false }); },
+  login() {
+    setState({ authenticated: true });
+  },
+  logout() {
+    setState({ authenticated: false });
+  },
 
   // Helpers genéricos de colección
-  add<K extends "players" | "clubs" | "contacts" | "opportunities" | "tasks" | "events" | "communications" | "documents" | "scouting" | "inquiries">(
-    key: K, item: Store[K][number],
-  ) {
-    setState({ [key]: [{ ...(item as object), id: (item as { id?: string }).id ?? uid() }, ...(state[key] as unknown[])] } as Partial<Store>);
-  },
-  update<K extends "players" | "clubs" | "contacts" | "opportunities" | "tasks" | "events" | "communications" | "documents" | "scouting" | "negotiations" | "inquiries">(
-    key: K, id: string, patch: Partial<Store[K][number]>,
-  ) {
+  add<
+    K extends
+      | "players"
+      | "clubs"
+      | "contacts"
+      | "opportunities"
+      | "tasks"
+      | "events"
+      | "communications"
+      | "documents"
+      | "scouting"
+      | "inquiries",
+  >(key: K, item: Store[K][number]) {
     setState({
-      [key]: (state[key] as { id: string }[]).map((it) => (it.id === id ? { ...it, ...patch } : it)),
+      [key]: [
+        { ...(item as object), id: (item as { id?: string }).id ?? uid() },
+        ...(state[key] as unknown[]),
+      ],
     } as Partial<Store>);
   },
-  remove<K extends "players" | "clubs" | "contacts" | "opportunities" | "tasks" | "events" | "communications" | "documents" | "scouting">(key: K, id: string) {
-    setState({ [key]: (state[key] as { id: string }[]).filter((it) => it.id !== id) } as Partial<Store>);
+  update<
+    K extends
+      | "players"
+      | "clubs"
+      | "contacts"
+      | "opportunities"
+      | "tasks"
+      | "events"
+      | "communications"
+      | "documents"
+      | "scouting"
+      | "negotiations"
+      | "inquiries",
+  >(key: K, id: string, patch: Partial<Store[K][number]>) {
+    setState({
+      [key]: (state[key] as { id: string }[]).map((it) =>
+        it.id === id ? { ...it, ...patch } : it,
+      ),
+    } as Partial<Store>);
+  },
+  remove<
+    K extends
+      | "players"
+      | "clubs"
+      | "contacts"
+      | "opportunities"
+      | "negotiations"
+      | "tasks"
+      | "events"
+      | "communications"
+      | "documents"
+      | "scouting",
+  >(key: K, id: string) {
+    setState({
+      [key]: (state[key] as { id: string }[]).filter((it) => it.id !== id),
+    } as Partial<Store>);
   },
 
   moveOpportunity(id: string, stage: Opportunity["stage"]) {
@@ -116,7 +176,9 @@ export const actions = {
   },
 
   markNotificationRead(id: string) {
-    setState({ notifications: state.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)) });
+    setState({
+      notifications: state.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
+    });
   },
   markAllNotificationsRead() {
     setState({ notifications: state.notifications.map((n) => ({ ...n, read: true })) });

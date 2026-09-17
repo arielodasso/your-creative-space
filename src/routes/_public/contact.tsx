@@ -4,9 +4,10 @@ import { InquiryForm } from "@/components/public/InquiryForm";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/_public/contact")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    player: typeof search.player === "string" ? search.player : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { player?: string } => {
+    const player = typeof search["player"] === "string" ? (search["player"] as string) : undefined;
+    return player === undefined ? {} : { player };
+  },
   head: () => ({
     meta: [
       { title: "Contacto — NEXUS SPORTS" },
