@@ -10,13 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicAgencyRouteImport } from './routes/_public/agency'
+import { Route as PublicContactRouteImport } from './routes/_public/contact'
 import { Route as PublicServicesRouteImport } from './routes/_public/services'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAgendaRouteImport } from './routes/admin.agenda'
+import { Route as AdminClubsRouteImport } from './routes/admin.clubs'
+import { Route as AdminCommunicationsRouteImport } from './routes/admin.communications'
+import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
+import { Route as AdminDocumentsRouteImport } from './routes/admin.documents'
+import { Route as AdminNegotiationsRouteImport } from './routes/admin.negotiations'
+import { Route as AdminOpportunitiesRouteImport } from './routes/admin.opportunities'
+import { Route as AdminPlayersRouteImport } from './routes/admin.players'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
+import { Route as AdminScoutingRouteImport } from './routes/admin.scouting'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
 import { Route as PublicPlayersIndexRouteImport } from './routes/_public/players/index'
+import { Route as PublicPlayersPlayerIdRouteImport } from './routes/_public/players/$playerId'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
@@ -29,53 +50,231 @@ const PublicAgencyRoute = PublicAgencyRouteImport.update({
   path: '/agency',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicContactRoute = PublicContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => PublicRoute,
+} as any)
 const PublicServicesRoute = PublicServicesRouteImport.update({
   id: '/services',
   path: '/services',
   getParentRoute: () => PublicRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAgendaRoute = AdminAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClubsRoute = AdminClubsRouteImport.update({
+  id: '/clubs',
+  path: '/clubs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCommunicationsRoute = AdminCommunicationsRouteImport.update({
+  id: '/communications',
+  path: '/communications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContactsRoute = AdminContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDocumentsRoute = AdminDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNegotiationsRoute = AdminNegotiationsRouteImport.update({
+  id: '/negotiations',
+  path: '/negotiations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOpportunitiesRoute = AdminOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlayersRoute = AdminPlayersRouteImport.update({
+  id: '/players',
+  path: '/players',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminScoutingRoute = AdminScoutingRouteImport.update({
+  id: '/scouting',
+  path: '/scouting',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTasksRoute = AdminTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AdminRoute,
 } as any)
 const PublicPlayersIndexRoute = PublicPlayersIndexRouteImport.update({
   id: '/players/',
   path: '/players/',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicPlayersPlayerIdRoute = PublicPlayersPlayerIdRouteImport.update({
+  id: '/players/$playerId',
+  path: '/players/$playerId',
+  getParentRoute: () => PublicRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/agency': typeof PublicAgencyRoute
+  '/contact': typeof PublicContactRoute
   '/services': typeof PublicServicesRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/clubs': typeof AdminClubsRoute
+  '/admin/communications': typeof AdminCommunicationsRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/negotiations': typeof AdminNegotiationsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/players': typeof AdminPlayersRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/scouting': typeof AdminScoutingRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
+  '/admin/': typeof AdminIndexRoute
+  '/players/$playerId': typeof PublicPlayersPlayerIdRoute
   '/players/': typeof PublicPlayersIndexRoute
 }
 export interface FileRoutesByTo {
   '/agency': typeof PublicAgencyRoute
+  '/contact': typeof PublicContactRoute
   '/services': typeof PublicServicesRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/clubs': typeof AdminClubsRoute
+  '/admin/communications': typeof AdminCommunicationsRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/negotiations': typeof AdminNegotiationsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/players': typeof AdminPlayersRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/scouting': typeof AdminScoutingRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/': typeof PublicIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/players/$playerId': typeof PublicPlayersPlayerIdRoute
   '/players': typeof PublicPlayersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
   '/_public/agency': typeof PublicAgencyRoute
+  '/_public/contact': typeof PublicContactRoute
   '/_public/services': typeof PublicServicesRoute
+  '/admin/agenda': typeof AdminAgendaRoute
+  '/admin/clubs': typeof AdminClubsRoute
+  '/admin/communications': typeof AdminCommunicationsRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/documents': typeof AdminDocumentsRoute
+  '/admin/negotiations': typeof AdminNegotiationsRoute
+  '/admin/opportunities': typeof AdminOpportunitiesRoute
+  '/admin/players': typeof AdminPlayersRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/scouting': typeof AdminScoutingRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/tasks': typeof AdminTasksRoute
   '/_public/': typeof PublicIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/_public/players/$playerId': typeof PublicPlayersPlayerIdRoute
   '/_public/players/': typeof PublicPlayersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agency' | '/services' | '/players/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/agency'
+    | '/contact'
+    | '/services'
+    | '/admin/agenda'
+    | '/admin/clubs'
+    | '/admin/communications'
+    | '/admin/contacts'
+    | '/admin/documents'
+    | '/admin/negotiations'
+    | '/admin/opportunities'
+    | '/admin/players'
+    | '/admin/reports'
+    | '/admin/scouting'
+    | '/admin/settings'
+    | '/admin/tasks'
+    | '/admin/'
+    | '/players/$playerId'
+    | '/players/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/agency' | '/services' | '/' | '/players'
+  to:
+    | '/agency'
+    | '/contact'
+    | '/services'
+    | '/admin/agenda'
+    | '/admin/clubs'
+    | '/admin/communications'
+    | '/admin/contacts'
+    | '/admin/documents'
+    | '/admin/negotiations'
+    | '/admin/opportunities'
+    | '/admin/players'
+    | '/admin/reports'
+    | '/admin/scouting'
+    | '/admin/settings'
+    | '/admin/tasks'
+    | '/'
+    | '/admin'
+    | '/players/$playerId'
+    | '/players'
   id:
     | '__root__'
     | '/_public'
+    | '/admin'
     | '/_public/agency'
+    | '/_public/contact'
     | '/_public/services'
+    | '/admin/agenda'
+    | '/admin/clubs'
+    | '/admin/communications'
+    | '/admin/contacts'
+    | '/admin/documents'
+    | '/admin/negotiations'
+    | '/admin/opportunities'
+    | '/admin/players'
+    | '/admin/reports'
+    | '/admin/scouting'
+    | '/admin/settings'
+    | '/admin/tasks'
     | '/_public/'
+    | '/admin/'
+    | '/_public/players/$playerId'
     | '/_public/players/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PublicRoute: typeof PublicRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -85,6 +284,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -101,12 +307,110 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAgencyRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/contact': {
+      id: '/_public/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof PublicContactRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/services': {
       id: '/_public/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof PublicServicesRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/agenda': {
+      id: '/admin/agenda'
+      path: '/agenda'
+      fullPath: '/admin/agenda'
+      preLoaderRoute: typeof AdminAgendaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clubs': {
+      id: '/admin/clubs'
+      path: '/clubs'
+      fullPath: '/admin/clubs'
+      preLoaderRoute: typeof AdminClubsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/communications': {
+      id: '/admin/communications'
+      path: '/communications'
+      fullPath: '/admin/communications'
+      preLoaderRoute: typeof AdminCommunicationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contacts': {
+      id: '/admin/contacts'
+      path: '/contacts'
+      fullPath: '/admin/contacts'
+      preLoaderRoute: typeof AdminContactsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/documents': {
+      id: '/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AdminDocumentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/negotiations': {
+      id: '/admin/negotiations'
+      path: '/negotiations'
+      fullPath: '/admin/negotiations'
+      preLoaderRoute: typeof AdminNegotiationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/opportunities': {
+      id: '/admin/opportunities'
+      path: '/opportunities'
+      fullPath: '/admin/opportunities'
+      preLoaderRoute: typeof AdminOpportunitiesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/players': {
+      id: '/admin/players'
+      path: '/players'
+      fullPath: '/admin/players'
+      preLoaderRoute: typeof AdminPlayersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/scouting': {
+      id: '/admin/scouting'
+      path: '/scouting'
+      fullPath: '/admin/scouting'
+      preLoaderRoute: typeof AdminScoutingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/tasks': {
+      id: '/admin/tasks'
+      path: '/tasks'
+      fullPath: '/admin/tasks'
+      preLoaderRoute: typeof AdminTasksRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_public/players/': {
       id: '/_public/players/'
@@ -115,28 +419,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicPlayersIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/players/$playerId': {
+      id: '/_public/players/$playerId'
+      path: '/players/$playerId'
+      fullPath: '/players/$playerId'
+      preLoaderRoute: typeof PublicPlayersPlayerIdRouteImport
+      parentRoute: typeof PublicRoute
+    }
   }
 }
 
 interface PublicRouteChildren {
   PublicAgencyRoute: typeof PublicAgencyRoute
+  PublicContactRoute: typeof PublicContactRoute
   PublicServicesRoute: typeof PublicServicesRoute
   PublicIndexRoute: typeof PublicIndexRoute
+  PublicPlayersPlayerIdRoute: typeof PublicPlayersPlayerIdRoute
   PublicPlayersIndexRoute: typeof PublicPlayersIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAgencyRoute: PublicAgencyRoute,
+  PublicContactRoute: PublicContactRoute,
   PublicServicesRoute: PublicServicesRoute,
   PublicIndexRoute: PublicIndexRoute,
+  PublicPlayersPlayerIdRoute: PublicPlayersPlayerIdRoute,
   PublicPlayersIndexRoute: PublicPlayersIndexRoute,
 }
 
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface AdminRouteChildren {
+  AdminAgendaRoute: typeof AdminAgendaRoute
+  AdminClubsRoute: typeof AdminClubsRoute
+  AdminCommunicationsRoute: typeof AdminCommunicationsRoute
+  AdminContactsRoute: typeof AdminContactsRoute
+  AdminDocumentsRoute: typeof AdminDocumentsRoute
+  AdminNegotiationsRoute: typeof AdminNegotiationsRoute
+  AdminOpportunitiesRoute: typeof AdminOpportunitiesRoute
+  AdminPlayersRoute: typeof AdminPlayersRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminScoutingRoute: typeof AdminScoutingRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTasksRoute: typeof AdminTasksRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAgendaRoute: AdminAgendaRoute,
+  AdminClubsRoute: AdminClubsRoute,
+  AdminCommunicationsRoute: AdminCommunicationsRoute,
+  AdminContactsRoute: AdminContactsRoute,
+  AdminDocumentsRoute: AdminDocumentsRoute,
+  AdminNegotiationsRoute: AdminNegotiationsRoute,
+  AdminOpportunitiesRoute: AdminOpportunitiesRoute,
+  AdminPlayersRoute: AdminPlayersRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminScoutingRoute: AdminScoutingRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTasksRoute: AdminTasksRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   PublicRoute: PublicRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
