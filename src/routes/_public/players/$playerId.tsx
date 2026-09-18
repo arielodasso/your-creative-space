@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { ClubBadge } from "@/components/ClubBadge";
 import { StatusBadge } from "@/components/StatusBadge";
+import { PlayerVideoGallery } from "@/components/PlayerVideoGallery";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { playerPhotos } from "@/lib/data/photos";
@@ -158,6 +159,7 @@ function PlayerProfilePage() {
           <TabsList>
             <TabsTrigger value="perfil">Perfil</TabsTrigger>
             <TabsTrigger value="stats">Estadísticas</TabsTrigger>
+            <TabsTrigger value="videos">Videos</TabsTrigger>
             <TabsTrigger value="historial">Historial</TabsTrigger>
             <TabsTrigger value="plan">Plan de carrera</TabsTrigger>
           </TabsList>
@@ -301,6 +303,11 @@ function PlayerProfilePage() {
                 </div>
               </div>
             </div>
+          </TabsContent>
+
+          {/* VIDEOS */}
+          <TabsContent value="videos" className="mt-8">
+            <PlayerVideoGallery player={player} />
           </TabsContent>
 
           {/* HISTORIAL */}

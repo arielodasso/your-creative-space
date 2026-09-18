@@ -9,9 +9,34 @@ import type {
   Notification,
   Opportunity,
   Player,
+  PlayerVideo,
   ScoutingReport,
   Task,
 } from "./types";
+
+const DEMO_VIDEO = [
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+  "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+];
+
+const v = (
+  id: string,
+  title: string,
+  category: PlayerVideo["category"],
+  duration: string,
+  date: string,
+  extra: Partial<PlayerVideo> = {},
+): PlayerVideo => {
+  const index = (id.charCodeAt(0) + id.length) % DEMO_VIDEO.length;
+  return { id, title, category, duration, url: DEMO_VIDEO[index] ?? DEMO_VIDEO[0]!, date, ...extra };
+};
 
 // ============ CLUBES (12, todos ficticios) ============
 export const clubs: Club[] = [
@@ -49,6 +74,13 @@ export const players: Player[] = [
       { clubId: "atletico-del-plata", period: "2022 — Actualidad", category: "Primera División" },
       { clubId: "atletico-del-plata", period: "2015 — 2022", category: "Formativas" },
     ],
+    videos: [
+      v("mf-v1", "Highlights completos — Temporada 2025", "Highlights", "8:24", "2026-08-01", { featured: true, description: "Goles, asistencias y construcciones de juego de la temporada 2025." }),
+      v("mf-v2", "Asistencias y último pase 2025", "Highlights", "4:12", "2026-07-10", { description: "Compilado de pases de gol y habilitaciones." }),
+      v("mf-v3", "Pelota parada: tiros libres y corners", "Skills", "3:05", "2026-06-18", { description: "Ejecuciones de tiros libres, corners y jugadas elaboradas." }),
+      v("mf-v4", "Entrevista: «El 10 del Litoral»", "Entrevista", "6:40", "2026-05-20", { description: "Conversación sobre su presente, liderazgo y proyección." }),
+      v("mf-v5", "Detrás de escena: pretemporada", "Detrás de escena", "5:18", "2026-02-12", { description: "Trabajo de pretemporada con el plantel de Atlético del Plata." }),
+    ],
     nextAction: "Enviar portfolio a Atlético Horizonte",
     internalNotes: "Cláusula de salida del 15% sobre plusvalía. Familia prioriza salto a Europa en 2026.",
     planning: { short: "Cerrar transferencia a club de mayor exposición", mid: "Consolidarse en liga europea secundaria", long: "Salto a liga top-5 de Europa", actions: ["Enviar portfolio a 5 clubes", "Preparar showcase en Buenos Aires", "Actualizar video de highlights"] },
@@ -69,6 +101,13 @@ export const players: Player[] = [
     history: [
       { clubId: "cd-central", period: "2023 — Actualidad", category: "Primera División" },
       { clubId: "cd-central", period: "2017 — 2023", category: "Formativas" },
+    ],
+    videos: [
+      v("lb-v1", "Highlights 2025 — Regates y desbordes", "Highlights", "7:10", "2026-08-05", { featured: true, description: "Desbordes, regates y centros de la temporada 2025." }),
+      v("lb-v2", "Goles de la temporada 2025", "Goles", "3:48", "2026-07-25", { description: "Todos los goles convertidos en la temporada pasada." }),
+      v("lb-v3", "Skills: velocidad y uno contra uno", "Skills", "4:30", "2026-06-30", { description: "Ritmo y perfil zurdo entrando desde la derecha." }),
+      v("lb-v4", "Entrevista: proyección europea", "Entrevista", "5:52", "2026-04-14", { description: "El extremo habla de su objetivo de dar el salto." }),
+      v("lb-v5", "Detrás de escena: entrenamiento", "Detrás de escena", "4:06", "2026-03-02", { description: "Rutinas de entrenamiento y fortaleza física." }),
     ],
     nextAction: "Seguimiento físico y plan de fuerza",
     internalNotes: "Renovación prioritaria: contrato vence fin de 2026. Interés de Vega Real.",
@@ -92,6 +131,13 @@ export const players: Player[] = [
       { clubId: "real-monteverde", period: "2021 — Actualidad", category: "Primera División" },
       { clubId: "defensor-litoral", period: "2018 — 2021", category: "Formativas" },
     ],
+    videos: [
+      v("td-v1", "Compilado defensivo 2025", "Highlights", "6:55", "2026-08-10", { featured: true, description: "Cortes, duelos aéreos y salidas de la temporada." }),
+      v("td-v2", "Duelos aéreos y anticipaciones", "Highlights", "4:20", "2026-07-15", { description: "Fortaleza en el juego aéreo y lectura de juego." }),
+      v("td-v3", "Salida con pelota: inicio de juego", "Rendimiento", "3:32", "2026-06-22", { description: "Construcción desde el fondo y habilitaciones largas." }),
+      v("td-v4", "Gol de cabeza vs. Defensor del Litoral", "Goles", "1:15", "2026-05-08", { description: "Cabezazo clave en el área rival." }),
+      v("td-v5", "Entrevista: el liderazgo atrás", "Entrevista", "7:02", "2026-03-18", { description: "Referente defensivo pese a su juventud." }),
+    ],
     nextAction: "Preparar presentación para clubes de España",
     internalNotes: "Objetivo: España 2026. Mar de Luz ya pidió informes completos.",
     planning: { short: "Showcase ante clubes españoles", mid: "Transferencia a Segunda Federación o similar", long: "Consolidación en liga profesional europea", actions: ["Compilar informes defensivos", "Coordinar visita de Mar de Luz", "Video de duelos aéreos"] },
@@ -112,6 +158,13 @@ export const players: Player[] = [
     history: [
       { clubId: "sporting-del-sur", period: "2024 — Actualidad", category: "Primera División" },
       { clubId: "atletico-horizonte", period: "2016 — 2024", category: "Formativas" },
+    ],
+    videos: [
+      v("nr-v1", "Highlights 2025 — Goles y definiciones", "Highlights", "7:40", "2026-08-12", { featured: true, description: "Los 14 goles de la temporada y jugadas de riesgo." }),
+      v("nr-v2", "Todos los goles de la temporada", "Goles", "5:10", "2026-07-30", { description: "Compilado completo de conquistas del 2025." }),
+      v("nr-v3", "Skills: definición y cabezazo", "Skills", "3:58", "2026-06-25", { description: "Asocia, ataca el primer palo y define con ambas piernas." }),
+      v("nr-v4", "Rendimiento vs. CD Central", "Rendimiento", "4:44", "2026-04-22", { description: "Actuación delantero centro en el clásico." }),
+      v("nr-v5", "Entrevista: goleador de Sporting", "Entrevista", "6:15", "2026-03-06", { description: "El nueve habla de su explosión goleadora." }),
     ],
     nextAction: "Registrar comunicación con scout de Pontenuovo",
     internalNotes: "Pontenuovo lo observó dos veces. Mantener perfil bajo hasta fin de temporada.",
@@ -134,6 +187,12 @@ export const players: Player[] = [
       { clubId: "atletico-del-plata", period: "2020 — Actualidad", category: "Primera División" },
       { clubId: "atletico-del-plata", period: "2014 — 2020", category: "Formativas" },
     ],
+    videos: [
+      v("js-v1", "Highlights 2025 — Recuperación y pase", "Highlights", "6:20", "2026-08-08", { featured: true, description: "Recuperaciones, coberturas y distribución de juego." }),
+      v("js-v2", "Rendimiento táctico: coberturas", "Rendimiento", "4:35", "2026-07-20", { description: "Lectura táctica y trabajo sin pelota." }),
+      v("js-v3", "Primer pase y distribución", "Highlights", "3:15", "2026-06-28", { description: "Pase corto y salida limpia desde el mediocampo." }),
+      v("js-v4", "Detrás de escena: análisis de partido", "Detrás de escena", "5:25", "2026-04-02", { description: "Revisión en video con el cuerpo técnico." }),
+    ],
     nextAction: "Iniciar conversación de renovación",
     internalNotes: "Contrato vence junio 2026: alerta de renovación activa.",
     planning: { short: "Renovar o definir salida antes de junio", mid: "Consolidarse como referente del mediocampo", long: "Llegar a seleccionado ficticio mayor", actions: ["Reunión con presidente del Plata", "Evaluar ofertas de Chile"] },
@@ -153,6 +212,12 @@ export const players: Player[] = [
     ],
     history: [
       { clubId: "real-monteverde", period: "2019 — Actualidad", category: "Primera División" },
+    ],
+    videos: [
+      v("bc-v1", "Highlights de atajadas 2025", "Highlights", "6:48", "2026-08-15", { featured: true, description: "Atajadas claves de la valla menos vencida de la liga." }),
+      v("bc-v2", "Atajadas de penales", "Atajadas", "2:55", "2026-07-18", { description: "Penales atajados y réplicas en los mano a mano." }),
+      v("bc-v3", "Juego de pies: salidas y distribución", "Rendimiento", "3:42", "2026-06-10", { description: "Salidas aéreos, juego corto y con los pies." }),
+      v("bc-v4", "Entrevista: seguridad bajo los tres palos", "Entrevista", "6:05", "2026-03-25", { description: "El arquero repasa su evolución y objetivos." }),
     ],
     nextAction: "Actualizar video de atajadas",
     internalNotes: "Interés de Costa Brava como reemplazo a futuro.",
@@ -174,6 +239,12 @@ export const players: Player[] = [
       { clubId: "cd-central", period: "2025 — Actualidad", category: "Primera División" },
       { clubId: "cd-central", period: "2019 — 2025", category: "Formativas" },
     ],
+    videos: [
+      v("da-v1", "Highlights 2025 — Proyección y centros", "Highlights", "5:30", "2026-08-18", { featured: true, description: "Recorrido, centros y proyección ofensiva del lateral." }),
+      v("da-v2", "Centros y asistencias", "Highlights", "3:20", "2026-07-22", { description: "Centros precisos y asistencias en el último tramo." }),
+      v("da-v3", "Skills: recorrido y marca 1vs1", "Skills", "3:05", "2026-06-14", { description: "Amplitud, repetición de esfuerzo y marca individual." }),
+      v("da-v4", "Detrás de escena: debut en primera", "Detrás de escena", "4:50", "2026-02-28", { description: "El juvenil recuerda su incorporación al plantel profesional." }),
+    ],
     nextAction: "Evaluar préstamo para sumar minutos",
     internalNotes: "Prioridad: minutos de competencia. Un préstamo a Sporting del Sur es una opción.",
     planning: { short: "Sumar 800+ minutos en primera", mid: "Titular indiscutido en Central", long: "Salto al exterior antes de los 22", actions: ["Evaluar opciones de préstamo", "Plan de desarrollo físico"] },
@@ -194,6 +265,12 @@ export const players: Player[] = [
     history: [
       { clubId: "deportivo-costa-brava", period: "2019 — Actualidad", category: "Primera División" },
       { clubId: "union-andina", period: "2015 — 2019", category: "Formativas" },
+    ],
+    videos: [
+      v("vr-v1", "Highlights 2025 — Llegada al área", "Highlights", "6:10", "2026-08-06", { featured: true, description: "Llegada desde segunda línea y juego de equipo." }),
+      v("vr-v2", "Goles desde segunda línea", "Goles", "3:00", "2026-07-12", { description: "Anotaciones entrando desde el mediocampo." }),
+      v("vr-v3", "Rendimiento: presión alta", "Rendimiento", "3:55", "2026-06-08", { description: "Presión, sacrificio defensivo y recuperaciones." }),
+      v("vr-v4", "Entrevista: ambidiestro en el medio", "Entrevista", "6:30", "2026-04-30", { description: "El chileno repasa su presente y el mercado." }),
     ],
     nextAction: "Gestionar oferta de Unión Andina",
     internalNotes: "Costa Brava abierto a vender con recompra. Contrato hasta fin de 2026.",

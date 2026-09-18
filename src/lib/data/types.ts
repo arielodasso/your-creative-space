@@ -26,6 +26,26 @@ export type ClubHistoryEntry = {
   category: string;
 };
 
+export type PlayerVideoCategory =
+  | "Highlights"
+  | "Skills"
+  | "Goles"
+  | "Atajadas"
+  | "Entrevista"
+  | "Detrás de escena"
+  | "Rendimiento";
+
+export type PlayerVideo = {
+  id: string;
+  title: string;
+  category: PlayerVideoCategory;
+  duration: string;
+  url: string;
+  date: string;
+  featured?: boolean;
+  description?: string;
+};
+
 export type Player = {
   id: string;
   name: string;
@@ -47,6 +67,7 @@ export type Player = {
   achievements: string[];
   stats: PlayerStats[];
   history: ClubHistoryEntry[];
+  videos: PlayerVideo[];
   photo: string; // clave en playerPhotos
   agent: string;
   nextAction: string;
